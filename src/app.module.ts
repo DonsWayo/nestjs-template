@@ -14,7 +14,7 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
       load: [configuration]
     }),
-    TypegooseModule.forRoot(process.env.MONGO_URI, {
+    TypegooseModule.forRoot(process.env.DATABASE, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,

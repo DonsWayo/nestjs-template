@@ -1,4 +1,4 @@
 export default () => ({
-    PORT: process.env.PORT,
-    MONGO_URI: process.env.DATABASE
+    port: process.env.PORT,
+    database: process.env.MONGO_URI
 });
