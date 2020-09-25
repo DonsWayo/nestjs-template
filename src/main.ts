@@ -53,6 +53,6 @@ async function bootstrap() {
       "Too many requests from this IP, please try again later"
   }));
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();

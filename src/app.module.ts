@@ -4,11 +4,16 @@ import { TypegooseModule } from 'nestjs-typegoose/dist/typegoose.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import configuration from './config/configuration';
 import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: [`./env/.env.${process.env.NODE_ENV}`],
+      isGlobal: true,
+      load: [configuration]
+    }),
     TypegooseModule.forRoot(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
