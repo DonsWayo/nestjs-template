@@ -46,10 +46,9 @@ async function bootstrap() {
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.use(compression());
- // console.log(__dirname);
   app.use(rateLimit({
     windowMs: 5 * 60 * 1000,
-    max: 1000000, // limit each IP to 100 requests per windowMs
+    max: 1000000,
     message:
       "Too many requests from this IP, please try again later"
   }));
