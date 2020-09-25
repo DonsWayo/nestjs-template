@@ -1,10 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as swStats from 'swagger-stats'
 import { NestExpressApplication } from '@nestjs/platform-express/interfaces/nest-express-application.interface';
 import { join } from 'path';
-
+import * as helmet from 'helmet';
+import * as swStats from 'swagger-stats'
+import * as bodyParser from 'body-parser';
+import * as rateLimit from 'express-rate-limit';
+import * as compression from 'compression';
+import { ValidationPipe } from '@nestjs/common';
 
 function ignoreFavicon(req, res, next) {
   if (req.originalUrl === '/favicon.ico') {
@@ -37,6 +41,18 @@ async function bootstrap() {
     uriPath: '/swagger-stats',
   }));
 
+  app.use(bodyParser.json({limit: '50mb'}));
+  app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+  app.use(helmet());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.use(compression());
+ // console.log(__dirname);
+  app.use(rateLimit({
+    windowMs: 5 * 60 * 1000,
+    max: 1000000, // limit each IP to 100 requests per windowMs
+    message:
+      "Too many requests from this IP, please try again later"
+  }));
 
   await app.listen(3000);
 }
