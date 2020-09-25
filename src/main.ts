@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as swStats from 'swagger-stats'
+import { NestExpressApplication } from '@nestjs/platform-express/interfaces/nest-express-application.interface';
+import { join } from 'path';
 
 
 function ignoreFavicon(req, res, next) {
@@ -13,7 +15,9 @@ function ignoreFavicon(req, res, next) {
 }
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useStaticAssets(join(__dirname, '/../public'));
 
   const options = new DocumentBuilder()
     .setTitle('Nest Api')
