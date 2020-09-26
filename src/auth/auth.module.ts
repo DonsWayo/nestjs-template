@@ -14,7 +14,7 @@ import { LocalStrategy } from './local.strategy';
     TypegooseModule.forFeature([User]),
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: process.env.JWT_SECRET || 'supersecreto',
       signOptions: { expiresIn: '16d' },
     })
   ],

@@ -52,6 +52,6 @@ async function bootstrap() {
       "Too many requests from this IP, please try again later"
   }));
 
-  await app.listen(process.env.PORT);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

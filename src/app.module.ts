@@ -14,7 +14,7 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
       load: [configuration]
     }),
-    TypegooseModule.forRoot(process.env.DATABASE, {
+    TypegooseModule.forRoot(process.env.DATABASE || 'mongodb://localhost:27017/dbname', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
